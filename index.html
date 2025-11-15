@@ -203,7 +203,7 @@ body {
 
     <div class="amount-box full-card">
         <p style="color:var(--muted);margin:0;">Payable Amount</p>
-        <h2>₹ 1250</h2>
+        <h2>₹ 1</h2>
     </div>
 
     <button class="pay-btn" onclick="openPopup()">Pay Now</button>
@@ -263,7 +263,7 @@ function closePopup() {
 
 function payUPI() {
     const link =
-"upi://pay?pa=bhaveshsutharb830@okhdfcbank&pn=OM%20HEALTH%20CARE&am=1250&cu=INR&tn=Payment%20to%20OM%20HEALTH%20CARE";
+"upi://pay?pa=bhaveshsutharb830@okhdfcbank&pn=OM%20HEALTH%20CARE&am=1&cu=INR&tn=Payment%20to%20OM%20HEALTH%20CARE";
 
     localStorage.setItem("paymentInProgress", "1");
 
@@ -284,7 +284,7 @@ function showSuccess() {
     // Play apple-style "ding" sound
     document.getElementById("successSound").play();
 
-    // Vibration (works on Android + iOS Safari)
+    // Vibration (Android + iOS Safari)
     if (navigator.vibrate) {
         navigator.vibrate([30, 20, 30]);
     }
