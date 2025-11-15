@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OM HEALTH CARE - Payment</title>
+
+<style>
+:root {
+    --bg: #ececec;
+    --card: #ffffff;
+    --text: #222;
+    --muted: #777;
+    --accent: #3d3d3d;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.10);
+    --success: #2ecc71;
+}
+
+/* BASE */
+body {
+    margin: 0;
+    background: var(--bg);
+    font-family: Arial, sans-serif;
+    color: var(--text);
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.header img {
+    width: 90px;
+    border-radius: 12px;
+}
+
+.header h1 {
+    margin: 10px 0 0;
+    font-size: 24px;
+}
+
+/* AMOUNT CARD */
+.amount-box {
+    margin-top: 20px;
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.amount-box h2 {
+    font-size: 32px;
+    margin: 0;
+}
+
+.pay-btn {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    padding: 16px;
+    margin-top: 20px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* POPUP */
+.popup-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup {
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close {
+    text-align: right;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* UPI GRID */
+.upi-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.upi-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 14px;
+}
+
+.upi-btn {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.upi-btn img {
+    width: 40px;
+    height: 40px;
+}
+
+/* SUCCESS PAGE */
+#successPage {
+    display: none;
+    text-align: center;
+    padding-top: 60px;
+    animation: fadeIn 0.4s ease;
+}
+
+.success-circle {
+    width: 150px;
+    height: 150px;
+    background: #eafff2;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pop 0.5s ease-out;
+    margin-bottom: 20px;
+}
+
+@keyframes pop {
+    0% { transform: scale(0.3); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.success-tick {
+    font-size: 90px;
+    color: var(--success);
+    font-weight: bold;
+}
+
+.full-card {
+    padding: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SUCCESS PAGE -->
+<div id="successPage">
+    <div class="success-circle">
+        <div class="success-tick">✓</div>
+    </div>
+    <h2>Payment Successful</h2>
+    <p style="color:var(--muted);font-size:16px;margin-top:8px;">
+        Your payment to <b>OM HEALTH CARE</b><br>has been received.
+    </p>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage" class="container">
+
+    <div class="header">
+        <img src="Screenshot 2025-09-07 173907.png">
+        <h1>OM HEALTH CARE</h1>
+        <p style="margin-top:4px;color:var(--muted);font-size:14px;">Medicine & General Store</p>
+    </div>
+
+    <div class="amount-box full-card">
+        <p style="color:var(--muted);margin:0;">Payable Amount</p>
+        <h2>₹ 1250</h2>
+    </div>
+
+    <button class="pay-btn" onclick="openPopup()">Pay Now</button>
+
+</div>
+
+<!-- PAYMENT POPUP -->
+<div class="popup-bg" id="popup">
+    <div class="popup">
+        <div class="close" onclick="closePopup()">✖ Close</div>
+
+        <div class="upi-title">Pay Using UPI</div>
+
+        <div class="upi-grid">
+
+            <div class="upi-btn" onclick="payUPI()">
+                <img src="Screenshot 2025-11-15 224710.png">
+                Google Pay
+            </div>
+
+            <div class="upi-btn" onclick="payUPI()">
+                <img src="Screenshot 2025-11-15 224740.png">
+                PhonePe
+            </div>
+
+            <div class="upi-btn" onclick="payUPI()">
+                <img src="Screenshot 2025-11-15 224857.png">
+                Paytm
+            </div>
+
+            <div class="upi-btn" onclick="payUPI()">
+                <img src="Screenshot 2025-11-15 224809.png">
+                BHIM UPI
+            </div>
+
+        </div>
+
+        <p style="text-align:center;margin-top:12px;color:var(--muted);font-size:14px;">
+            UPI ID: <b>bhaveshsutharb830@okhdfcbank</b>
+        </p>
+    </div>
+</div>
+
+<!-- Embedded Apple-style DING sound -->
+<audio id="successSound">
+    <source src="data:audio/mp3;base64,SUQzAwAAAAAAF1RTU0UAAAAPAAADTGF2ZjU2LjMyLjEwNAAAAAAAAAAAAAAA//tQxAADB2xMcSXIiIiIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg" type="audio/mp3">
+</audio>
+
+<script>
+function openPopup() {
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function payUPI() {
+    const link =
+"upi://pay?pa=bhaveshsutharb830@okhdfcbank&pn=OM%20HEALTH%20CARE&am=1250&cu=INR&tn=Payment%20to%20OM%20HEALTH%20CARE";
+
+    localStorage.setItem("paymentInProgress", "1");
+
+    window.location.href = link;
+}
+
+window.onload = function() {
+    if (localStorage.getItem("paymentInProgress") === "1") {
+        localStorage.removeItem("paymentInProgress");
+        showSuccess();
+    }
+};
+
+function showSuccess() {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("successPage").style.display = "block";
+
+    // Play apple-style "ding" sound
+    document.getElementById("successSound").play();
+
+    // Vibration (works on Android + iOS Safari)
+    if (navigator.vibrate) {
+        navigator.vibrate([30, 20, 30]);
+    }
+}
+</script>
+
+</body>
+</html>
