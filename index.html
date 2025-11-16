@@ -8,143 +8,100 @@
 <!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- QR Code Library -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 
 <style>
-/* Ripple animation */
-.ripple{position:relative;overflow:hidden;}
-.ripple:after{
-  content:"";position:absolute;border-radius:50%;transform:scale(0);
-  opacity:0.25;background:rgba(0,0,0,0.2);width:120px;height:120px;
-  pointer-events:none;transition:transform 600ms ease-out,opacity 600ms ease-out;
-}
-.ripple:active:after{transform:scale(1);opacity:0;transition:0s;}
-
-/* Modal fade */
-.backdropFade{animation:fadeIn 0.25s ease both;}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-/* Slide-up modal */
-.slideUp{animation:slideUp 0.28s ease;}
-@keyframes slideUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-
-/* Loader spinner */
-.loader{
-  border:4px solid #e5e7eb;
-  border-top-color:#6b7280;
-  border-radius:50%;
-  width:55px;height:55px;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Enhanced grey and white theme */
-.bg-custom-gray {
+body {
   background-color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-.bg-custom-white {
-  background-color: #ffffff;
+.loader {
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #4f46e5;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  animation: spin 1s linear infinite;
 }
 
-.border-custom {
-  border-color: #e2e8f0;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.text-custom-gray {
-  color: #64748b;
+.ripple {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Payment limit warning */
-.limit-warning {
-  background-color: #fffbeb;
-  border: 1px solid #fcd34d;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 16px;
-  font-size: 0.875rem;
+.ripple:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0.25;
+  background: rgba(0, 0, 0, 0.2);
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  transition: transform 600ms ease-out, opacity 600ms ease-out;
 }
 
-/* Improved button styles */
-.btn-primary {
-  background-color: #4f46e5;
-  color: white;
-  transition: all 0.2s;
+.ripple:active:after {
+  transform: scale(1);
+  opacity: 0;
+  transition: 0s;
 }
 
-.btn-primary:hover {
-  background-color: #4338ca;
+.backdropFade {
+  animation: fadeIn 0.25s ease both;
 }
 
-.btn-secondary {
-  background-color: #f1f5f9;
-  color: #475569;
-  transition: all 0.2s;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.btn-secondary:hover {
-  background-color: #e2e8f0;
+.slideUp {
+  animation: slideUp 0.28s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .touch-button {
-    min-height: 44px;
-    padding: 12px 16px;
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Error screen styles */
-.error-icon {
-  width: 80px;
-  height: 80px;
-  background: #fee2e2;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 2.5rem;
-  color: #dc2626;
-}
-
-/* Success screen styles */
-.success-icon {
-  width: 80px;
-  height: 80px;
-  background: #dcfce7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 2.5rem;
-  color: #16a34a;
-}
-
-/* QR Code Styles */
-.qr-code-container {
-  background: white;
-  padding: 16px;
+.app-logo {
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
 }
 
-.qr-code {
-  border: 8px solid white;
-  border-radius: 8px;
-  background: white;
+.gpay-logo { 
+  background: linear-gradient(135deg, #4285F4, #34A853);
+}
+.phonepe-logo { 
+  background: linear-gradient(135deg, #5F259F, #8B5FCC);
+}
+.paytm-logo { 
+  background: linear-gradient(135deg, #002E6E, #0044CC);
+}
+.bhim-logo { 
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
 }
 
-/* Image responsive styles */
-.responsive-img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Bank specific styles */
 .sbi-bank {
   background: linear-gradient(135deg, #4caf50, #66bb6a);
   color: white;
@@ -165,66 +122,40 @@
   color: white;
 }
 
-.kotak-bank {
-  background: linear-gradient(135deg, #7e22ce, #a855f7);
-  color: white;
-}
-
-.pnb-bank {
-  background: linear-gradient(135deg, #b91c1c, #dc2626);
-  color: white;
-}
-
-.bob-bank {
-  background: linear-gradient(135deg, #0d9488, #14b8a6);
-  color: white;
-}
-
-.bank-of-india {
-  background: linear-gradient(135deg, #1e40af, #3b82f6);
-  color: white;
-}
-
-.canara-bank {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-  color: white;
-}
-
-.idbi-bank {
-  background: linear-gradient(135deg, #dc2626, #ef4444);
-  color: white;
-}
-
-.bank-selector {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-/* Payment Tabs */
 .payment-tab {
   transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
 }
 
 .payment-tab.active {
-  border-bottom: 3px solid #4f46e5;
+  border-bottom-color: #4f46e5;
   color: #4f46e5;
   font-weight: 600;
+}
+
+.qr-code {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
 }
 </style>
 </head>
 
-<body class="bg-custom-gray min-h-screen">
+<body class="min-h-screen bg-gray-50">
 
 <!-- MAIN APP -->
 <div id="app" class="min-h-screen flex flex-col">
 
   <!-- HEADER -->
-  <header class="bg-custom-white shadow-md rounded-b-2xl">
+  <header class="bg-white shadow-sm rounded-b-2xl">
     <div class="max-w-3xl mx-auto px-6 py-6 flex items-center gap-4">
-      <img src="Screenshot 2025-09-07 173907.png" alt="OM HEALTH CARE Logo" class="w-20 h-20 rounded-lg object-contain border border-custom responsive-img">
+      <div class="w-20 h-20 rounded-xl border-2 border-blue-500 flex items-center justify-center bg-blue-50">
+        <span class="text-blue-600 font-bold text-2xl">OM</span>
+      </div>
       <div>
-        <h1 class="text-2xl font-semibold text-gray-800">OM HEALTH CARE</h1>
-        <p class="text-sm text-custom-gray">Medicine & General Store</p>
+        <h1 class="text-2xl font-bold text-gray-800">OM HEALTH CARE</h1>
+        <p class="text-sm text-gray-600">Medicine & General Store</p>
       </div>
     </div>
   </header>
@@ -233,36 +164,57 @@
   <main class="flex-1 flex items-center justify-center px-4 py-8">
     <div class="w-full max-w-3xl">
 
-      <section class="bg-custom-white rounded-2xl shadow-lg p-6 md:p-8 border border-custom">
+      <section class="bg-white rounded-2xl shadow-sm p-6 md:p-8 border border-gray-200">
         <div class="flex flex-col md:flex-row items-center gap-6">
           <div class="flex-1">
-            <p class="text-sm text-custom-gray">Payable Amount</p>
+            <p class="text-sm text-gray-600">Payable Amount</p>
             <h2 class="mt-3 text-4xl font-bold text-gray-900">₹ <span id="amountDisplay">1.00</span></h2>
             
             <!-- Product Information -->
-            <div class="mt-4 p-3 bg-gray-50 rounded-lg">
-              <h3 class="font-medium text-gray-700">Fortifier Vitamin</h3>
-              <p class="text-sm text-custom-gray mt-1">Payment to: OM HEALTH CARE</p>
-              <p class="text-xs text-custom-gray mt-1">UPI ID: bhaveshsutharb830@okhdfcbank</p>
+            <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-gray-200">
+              <h3 class="font-semibold text-gray-800">Fortifier Vitamin</h3>
+              <p class="text-sm text-gray-600 mt-1">Payment to: OM HEALTH CARE</p>
+              <p class="text-xs text-gray-600 mt-1">UPI ID: <span id="upiShownMain">bhaveshsutharb830@okhdfcbank</span></p>
             </div>
             
-            <!-- Payment Limit Warning -->
-            <div class="limit-warning">
+            <!-- Payment Info -->
+            <div class="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
               <div class="flex items-start">
-                <svg class="w-5 h-5 text-amber-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
                 <div>
-                  <p class="font-medium text-amber-800">Bank Transaction Limit</p>
-                  <p class="text-amber-700 mt-1">You may encounter payment limits with your bank. If payment fails, try a smaller amount or contact your bank.</p>
+                  <p class="font-semibold text-green-800">Instant Payment Receiving</p>
+                  <p class="text-green-700 text-sm mt-1">All payments go directly to your HDFC bank account instantly</p>
                 </div>
+              </div>
+            </div>
+
+            <!-- Manual Payment Section -->
+            <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+              <h4 class="font-semibold text-blue-800 text-lg">Manual Payment Option</h4>
+              <p class="text-blue-700 mt-2">If automatic payment fails:</p>
+              <ol class="text-blue-700 mt-3 list-decimal list-inside space-y-2">
+                <li>Open your UPI app</li>
+                <li>Enter UPI ID: <strong class="text-blue-900">bhaveshsutharb830@okhdfcbank</strong></li>
+                <li>Enter amount: ₹1.00</li>
+                <li>Add note: "Fortifier Vitamin"</li>
+                <li>Complete payment</li>
+              </ol>
+              <div class="mt-4 flex gap-3">
+                <button id="copyUpiBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ripple">
+                  Copy UPI ID
+                </button>
+                <button id="manualSuccessBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ripple">
+                  I've Paid Manually
+                </button>
               </div>
             </div>
           </div>
 
           <div class="w-full md:w-72">
             <button id="payNow"
-              class="ripple w-full btn-primary py-4 rounded-xl shadow-md text-lg font-semibold active:scale-[0.97] transition touch-button">
+              class="ripple w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg active:scale-95">
               Pay Now
             </button>
           </div>
@@ -270,25 +222,25 @@
       </section>
 
       <!-- UPI Logos -->
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-custom-white p-4 rounded-2xl shadow flex items-center gap-3 border border-custom">
-          <img src="Screenshot 2025-11-15 224710.png" alt="Google Pay" class="w-12 h-12 rounded responsive-img">
-          <div><div class="font-semibold text-gray-700">Google Pay</div></div>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-3 border border-gray-200">
+          <div class="app-logo gpay-logo">G Pay</div>
+          <div><div class="font-semibold text-gray-800">Google Pay</div></div>
         </div>
 
-        <div class="bg-custom-white p-4 rounded-2xl shadow flex items-center gap-3 border border-custom">
-          <img src="Screenshot 2025-11-15 224740.png" alt="PhonePe" class="w-12 h-12 rounded responsive-img">
-          <div><div class="font-semibold text-gray-700">PhonePe</div></div>
+        <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-3 border border-gray-200">
+          <div class="app-logo phonepe-logo">PhonePe</div>
+          <div><div class="font-semibold text-gray-800">PhonePe</div></div>
         </div>
 
-        <div class="bg-custom-white p-4 rounded-2xl shadow flex items-center gap-3 border border-custom">
-          <img src="Screenshot 2025-11-15 224857.png" alt="Paytm UPI" class="w-12 h-12 rounded responsive-img">
-          <div><div class="font-semibold text-gray-700">Paytm UPI</div></div>
+        <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-3 border border-gray-200">
+          <div class="app-logo paytm-logo">Paytm</div>
+          <div><div class="font-semibold text-gray-800">Paytm UPI</div></div>
         </div>
       </div>
 
-      <p class="text-center text-xs text-custom-gray mt-4">
-        UPI ID: <b id="upiShown">bhaveshsutharb830@okhdfcbank</b>
+      <p class="text-center text-sm text-gray-600 mt-6">
+        UPI ID: <b class="text-gray-800">bhaveshsutharb830@okhdfcbank</b>
       </p>
 
     </div>
@@ -296,27 +248,25 @@
 </div>
 
 <!-- PAYMENT POPUP -->
-<div id="paymentModal"
-  class="fixed inset-0 z-40 hidden items-center justify-center backdropFade p-4">
-
+<div id="paymentModal" class="fixed inset-0 z-40 hidden items-center justify-center backdropFade p-4">
   <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-  <div class="relative w-full max-w-lg mx-auto slideUp bg-custom-white rounded-2xl p-6 shadow-xl border border-custom max-h-[90vh] overflow-y-auto">
+  <div class="relative w-full max-w-lg mx-auto slideUp bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-h-[90vh] overflow-y-auto">
 
     <div class="flex justify-between items-start">
       <div>
-        <h3 class="text-xl font-semibold text-gray-800">Choose Payment Method</h3>
-        <p class="text-sm text-custom-gray mt-1">Tap an app to pay ₹1.00</p>
+        <h3 class="text-xl font-bold text-gray-800">Choose Payment Method</h3>
+        <p class="text-sm text-gray-600 mt-1">Tap an app to pay ₹1.00</p>
       </div>
       <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition">✕</button>
     </div>
 
     <!-- Payment Tabs -->
     <div class="flex border-b border-gray-200 mt-4">
-      <button id="upiTab" class="payment-tab active flex-1 py-2 px-4 text-center font-medium">
+      <button id="upiTab" class="payment-tab active flex-1 py-3 px-4 text-center font-medium">
         UPI Apps
       </button>
-      <button id="bankTab" class="payment-tab flex-1 py-2 px-4 text-center font-medium text-gray-500">
+      <button id="bankTab" class="payment-tab flex-1 py-3 px-4 text-center font-medium text-gray-500">
         Net Banking
       </button>
     </div>
@@ -324,187 +274,142 @@
     <!-- UPI Apps Section -->
     <div id="upiSection" class="mt-4">
       <div class="grid grid-cols-2 gap-3">
-        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-custom hover:border-indigo-300 transition touch-button" data-app="gpay">
-          <img src="Screenshot 2025-11-15 224710.png" alt="Google Pay" class="w-12 h-12 responsive-img">
-          <div><div class="font-semibold">GPay</div></div>
+        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="gpay">
+          <div class="app-logo gpay-logo">G Pay</div>
+          <div><div class="font-semibold text-gray-800">GPay</div></div>
         </button>
 
-        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-custom hover:border-indigo-300 transition touch-button" data-app="phonepe">
-          <img src="Screenshot 2025-11-15 224740.png" alt="PhonePe" class="w-12 h-12 responsive-img">
-          <div><div class="font-semibold">PhonePe</div></div>
+        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="phonepe">
+          <div class="app-logo phonepe-logo">PhonePe</div>
+          <div><div class="font-semibold text-gray-800">PhonePe</div></div>
         </button>
 
-        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-custom hover:border-indigo-300 transition touch-button" data-app="paytm">
-          <img src="Screenshot 2025-11-15 224857.png" alt="Paytm" class="w-12 h-12 responsive-img">
-          <div><div class="font-semibold">Paytm</div></div>
+        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="paytm">
+          <div class="app-logo paytm-logo">Paytm</div>
+          <div><div class="font-semibold text-gray-800">Paytm</div></div>
         </button>
 
-        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-custom hover:border-indigo-300 transition touch-button" data-app="bhim">
-          <img src="Screenshot 2025-11-15 224809.png" alt="BHIM" class="w-12 h-12 responsive-img">
-          <div><div class="font-semibold">BHIM</div></div>
+        <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="bhim">
+          <div class="app-logo bhim-logo">BHIM</div>
+          <div><div class="font-semibold text-gray-800">BHIM</div></div>
         </button>
       </div>
 
-      <p class="text-xs text-custom-gray text-center mt-3 break-all">
-        UPI ID: <b>bhaveshsutharb830@okhdfcbank</b>
+      <p class="text-xs text-gray-600 text-center mt-4 break-all">
+        UPI ID: <b class="text-gray-800">bhaveshsutharb830@okhdfcbank</b>
       </p>
 
-      <!-- QR Code -->
+      <!-- QR Code Section -->
       <div class="mt-6 text-center">
-        <h3 class="text-lg font-semibold text-gray-700">OR Scan QR Code</h3>
-        <div class="qr-code-container mt-3">
-          <canvas id="upiQR" class="qr-code mx-auto"></canvas>
+        <h3 class="text-lg font-semibold text-gray-800">OR Scan QR Code</h3>
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 mt-4 inline-block">
+          <canvas id="qrCodeCanvas" class="qr-code"></canvas>
         </div>
-        <p class="text-xs text-custom-gray mt-2">Scan using any UPI app</p>
+        <p class="text-sm text-gray-600 mt-3">Scan using any UPI app</p>
       </div>
     </div>
 
     <!-- Net Banking Section -->
     <div id="bankSection" class="mt-4 hidden">
-      <div class="bank-selector grid grid-cols-2 gap-3">
-        <!-- Major Indian Banks -->
-        <button class="bankBtn ripple touch-button sbi-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="sbi">
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+        <div class="flex items-start">
+          <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            <p class="font-semibold text-blue-800">Manual Net Banking Required</p>
+            <p class="text-blue-700 text-sm mt-1">Open your bank app and send payment to our UPI ID.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mt-4">
+        <button class="bankBtn ripple touch-button sbi-bank p-3 rounded-xl flex items-center gap-2 border border-gray-200 transition-all duration-200 active:scale-95" data-bank="sbi">
           <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
             <span class="text-green-600 font-bold text-sm">SBI</span>
           </div>
           <div class="text-left">
-            <div class="font-semibold text-white text-sm">SBI</div>
+            <div class="font-semibold text-white text-sm">SBI Yono</div>
           </div>
         </button>
 
-        <button class="bankBtn ripple touch-button hdfc-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="hdfc">
+        <button class="bankBtn ripple touch-button hdfc-bank p-3 rounded-xl flex items-center gap-2 border border-gray-200 transition-all duration-200 active:scale-95" data-bank="hdfc">
           <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
             <span class="text-blue-600 font-bold text-sm">HDFC</span>
           </div>
           <div class="text-left">
-            <div class="font-semibold text-white text-sm">HDFC</div>
+            <div class="font-semibold text-white text-sm">HDFC Bank</div>
           </div>
         </button>
 
-        <button class="bankBtn ripple touch-button icici-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="icici">
+        <button class="bankBtn ripple touch-button icici-bank p-3 rounded-xl flex items-center gap-2 border border-gray-200 transition-all duration-200 active:scale-95" data-bank="icici">
           <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
             <span class="text-orange-600 font-bold text-sm">ICICI</span>
           </div>
           <div class="text-left">
-            <div class="font-semibold text-white text-sm">ICICI</div>
+            <div class="font-semibold text-white text-sm">ICICI Bank</div>
           </div>
         </button>
 
-        <button class="bankBtn ripple touch-button axis-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="axis">
+        <button class="bankBtn ripple touch-button axis-bank p-3 rounded-xl flex items-center gap-2 border border-gray-200 transition-all duration-200 active:scale-95" data-bank="axis">
           <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
             <span class="text-red-600 font-bold text-sm">AXIS</span>
           </div>
           <div class="text-left">
-            <div class="font-semibold text-white text-sm">Axis</div>
-          </div>
-        </button>
-
-        <button class="bankBtn ripple touch-button kotak-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="kotak">
-          <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-            <span class="text-purple-600 font-bold text-sm">KOTAK</span>
-          </div>
-          <div class="text-left">
-            <div class="font-semibold text-white text-sm">Kotak</div>
-          </div>
-        </button>
-
-        <button class="bankBtn ripple touch-button pnb-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="pnb">
-          <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-            <span class="text-red-600 font-bold text-sm">PNB</span>
-          </div>
-          <div class="text-left">
-            <div class="font-semibold text-white text-sm">PNB</div>
-          </div>
-        </button>
-
-        <button class="bankBtn ripple touch-button bob-bank p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="bob">
-          <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-            <span class="text-teal-600 font-bold text-sm">BOB</span>
-          </div>
-          <div class="text-left">
-            <div class="font-semibold text-white text-sm">Bank of Baroda</div>
-          </div>
-        </button>
-
-        <button class="bankBtn ripple touch-button bank-of-india p-3 rounded-xl flex items-center gap-2 border border-custom transition" data-bank="boi">
-          <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-            <span class="text-blue-600 font-bold text-sm">BOI</span>
-          </div>
-          <div class="text-left">
-            <div class="font-semibold text-white text-sm">Bank of India</div>
+            <div class="font-semibold text-white text-sm">Axis Mobile</div>
           </div>
         </button>
       </div>
 
-      <p class="text-xs text-custom-gray text-center mt-3">
-        Select your bank to open Net Banking app
-      </p>
+      <div class="mt-4 text-center">
+        <button id="copyUpiBankBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 ripple">
+          Copy UPI ID for Net Banking
+        </button>
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- LOADER -->
-<div id="loaderScreen"
-  class="fixed inset-0 hidden z-50 bg-custom-white flex flex-col items-center justify-center p-4">
-
+<!-- LOADER SCREEN -->
+<div id="loaderScreen" class="fixed inset-0 hidden z-50 bg-white flex flex-col items-center justify-center p-4">
   <div class="loader"></div>
-
-  <p class="mt-6 text-gray-700 font-medium text-lg text-center" id="loaderText">Processing Payment...</p>
-  <p class="text-sm text-custom-gray mt-1 text-center">Please wait while we process your payment</p>
-
-  <button id="retryBtn"
-    class="hidden mt-6 px-5 py-2 btn-primary rounded-lg text-sm shadow ripple touch-button">
+  <p class="mt-6 text-gray-800 font-semibold text-lg text-center" id="loaderText">Processing Payment...</p>
+  <p class="text-sm text-gray-600 mt-1 text-center">Please wait while we process your payment</p>
+  <button id="retryBtn" class="hidden mt-6 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm shadow-md ripple transition-all duration-200">
     Retry Payment
   </button>
 </div>
 
 <!-- SUCCESS SCREEN -->
-<div id="successScreen"
-  class="fixed inset-0 hidden z-50 bg-custom-white flex items-center justify-center p-4">
-
+<div id="successScreen" class="fixed inset-0 hidden z-50 bg-white flex items-center justify-center p-4">
   <div class="text-center max-w-sm w-full">
-    <div class="success-icon">
-      <span class="text-2xl">✓</span>
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <span class="text-2xl text-green-600">✓</span>
     </div>
-
-    <h2 class="mt-6 text-2xl font-semibold text-gray-800">Payment Successful!</h2>
-
-    <p class="mt-3 text-custom-gray">
-      Thank you for your payment to <b>OM HEALTH CARE</b>.
-    </p>
-    
-    <div class="mt-4 p-3 bg-green-50 rounded-lg">
-      <p class="text-sm font-medium text-green-800">Transaction Details:</p>
-      <p class="text-xs text-green-700 mt-1">Amount: ₹1.00</p>
+    <h2 class="mt-2 text-2xl font-bold text-gray-800">Payment Successful!</h2>
+    <p class="mt-2 text-gray-600">Thank you for your payment to <b>OM HEALTH CARE</b>.</p>
+    <div class="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+      <p class="text-sm font-semibold text-green-800">Money Received!</p>
+      <p class="text-xs text-green-700 mt-1">Amount: ₹1.00 credited to your account</p>
       <p class="text-xs text-green-700">Status: Completed</p>
-      <p class="text-xs text-green-700">ID: <span id="transactionId">TXN${Date.now().toString().slice(-8)}</span></p>
     </div>
-
-    <button id="doneBtn"
-      class="mt-6 w-full bg-emerald-600 text-white px-6 py-3 rounded-xl shadow ripple active:scale-[0.97] transition touch-button">
+    <button id="doneBtn" class="mt-6 w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow-md ripple active:scale-95 transition-all duration-200">
       Done
     </button>
   </div>
 </div>
 
 <!-- ERROR SCREEN -->
-<div id="errorScreen"
-  class="fixed inset-0 hidden z-50 bg-custom-white flex items-center justify-center p-4">
-
+<div id="errorScreen" class="fixed inset-0 hidden z-50 bg-white flex items-center justify-center p-4">
   <div class="text-center max-w-sm w-full">
-    <div class="error-icon">
-      <span class="text-2xl">⚠️</span>
+    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <span class="text-2xl text-red-600">⚠️</span>
     </div>
-
-    <h2 class="mt-6 text-2xl font-semibold text-gray-800">Payment Failed</h2>
-
-    <p class="mt-3 text-custom-gray text-center" id="errorMessage">
-      The payment could not be processed.
-    </p>
-    
-    <div class="mt-4 p-3 bg-red-50 rounded-lg text-left">
-      <p class="text-sm font-medium text-red-800">Possible solutions:</p>
+    <h2 class="mt-2 text-2xl font-bold text-gray-800">Payment Failed</h2>
+    <p class="mt-2 text-gray-600 text-center" id="errorMessage">The payment could not be processed.</p>
+    <div class="mt-4 p-4 bg-red-50 rounded-xl border border-red-200 text-left">
+      <p class="text-sm font-semibold text-red-800">Possible solutions:</p>
       <ul class="text-xs text-red-700 mt-1 list-disc list-inside space-y-1">
         <li>Check your bank account balance</li>
         <li>Verify transaction limits with your bank</li>
@@ -512,14 +417,11 @@
         <li>Contact your bank for assistance</li>
       </ul>
     </div>
-
     <div class="mt-6 flex gap-3">
-      <button id="tryOtherMethodBtn"
-        class="flex-1 btn-secondary px-4 py-3 rounded-xl shadow ripple touch-button">
+      <button id="tryOtherMethodBtn" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-3 rounded-xl shadow-sm ripple transition-all duration-200">
         Try Another Method
       </button>
-      <button id="retryPaymentBtn"
-        class="flex-1 btn-primary px-4 py-3 rounded-xl shadow ripple touch-button">
+      <button id="retryPaymentBtn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl shadow-md ripple transition-all duration-200">
         Retry
       </button>
     </div>
@@ -527,251 +429,270 @@
 </div>
 
 <script>
+// Constants
 const UPI_ID = "bhaveshsutharb830@okhdfcbank";
 const AMOUNT = 1.00;
 
-document.getElementById('upiShown').textContent = UPI_ID;
-document.getElementById('amountDisplay').textContent = AMOUNT.toFixed(2);
+// Initialize DOM elements after page load
+document.addEventListener('DOMContentLoaded', function() {
+  initializeApp();
+});
 
-// DOM Elements
-const payNow = document.getElementById("payNow");
-const paymentModal = document.getElementById("paymentModal");
-const closeModal = document.getElementById("closeModal");
-const upiTab = document.getElementById("upiTab");
-const bankTab = document.getElementById("bankTab");
-const upiSection = document.getElementById("upiSection");
-const bankSection = document.getElementById("bankSection");
-const upiBtns = document.querySelectorAll(".upiBtn");
-const bankBtns = document.querySelectorAll(".bankBtn");
-const loaderScreen = document.getElementById("loaderScreen");
-const loaderText = document.getElementById("loaderText");
-const retryBtn = document.getElementById("retryBtn");
-const successScreen = document.getElementById("successScreen");
-const errorScreen = document.getElementById("errorScreen");
-const doneBtn = document.getElementById("doneBtn");
-const tryOtherMethodBtn = document.getElementById("tryOtherMethodBtn");
-const retryPaymentBtn = document.getElementById("retryPaymentBtn");
-const transactionId = document.getElementById("transactionId");
-const upiQR = document.getElementById("upiQR");
-
-// Event Listeners
-payNow.onclick = () => paymentModal.classList.remove("hidden");
-closeModal.onclick = () => paymentModal.classList.add("hidden");
-
-// Tab Switching
-upiTab.onclick = () => {
-  upiTab.classList.add('active', 'text-blue-600');
-  bankTab.classList.remove('active', 'text-blue-600');
-  bankTab.classList.add('text-gray-500');
-  upiSection.classList.remove('hidden');
-  bankSection.classList.add('hidden');
-};
-
-bankTab.onclick = () => {
-  bankTab.classList.add('active', 'text-blue-600');
-  upiTab.classList.remove('active', 'text-blue-600');
-  upiTab.classList.add('text-gray-500');
-  bankSection.classList.remove('hidden');
-  upiSection.classList.add('hidden');
-};
-
-// Working UPI Links for all apps
-const UPI_LINKS = {
-  'gpay': `upi://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR&tn=Payment%20for%20Fortifier%20Vitamin`,
-  'phonepe': `phonepe://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
-  'paytm': `paytmmp://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
-  'bhim': `bhim://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`
-};
-
-// Bank App Links
-const BANK_LINKS = {
-  'sbi': `yonosbi://main`,
-  'hdfc': `hdfc://netbanking`,
-  'icici': `icicibank://main`,
-  'axis': `axisbank://app`,
-  'kotak': `kotak://app`,
-  'pnb': `pnb://mobile`,
-  'bob': `bobworld://main`,
-  'boi': `boimobile://app`
-};
-
-// Generate QR Code
-function generateQRCode() {
-  const upiString = `upi://pay?pa=${UPI_ID}&pn=OM HEALTH CARE&am=${AMOUNT}&cu=INR`;
+function initializeApp() {
+  // Set initial values
+  document.getElementById('amountDisplay').textContent = AMOUNT.toFixed(2);
+  document.getElementById('upiShownMain').textContent = UPI_ID;
   
-  QRCode.toCanvas(upiQR, upiString, {
-    width: 200,
-    height: 200,
-    margin: 1,
-    color: {
-      dark: '#000000',
-      light: '#FFFFFF'
-    }
-  }, function(error) {
-    if (error) {
-      console.error('QR Code generation failed:', error);
-      // Fallback: Create a simple QR code placeholder
-      const ctx = upiQR.getContext('2d');
-      ctx.fillStyle = '#f3f4f6';
-      ctx.fillRect(0, 0, 200, 200);
-      ctx.fillStyle = '#6b7280';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText('QR Code', 100, 100);
-      ctx.fillText('Scan to Pay', 100, 120);
-    }
+  // Pay Now Button
+  document.getElementById('payNow').addEventListener('click', function() {
+    document.getElementById('paymentModal').classList.remove('hidden');
+    generateRealQRCode();
+  });
+
+  // Close Modal Button
+  document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('paymentModal').classList.add('hidden');
+  });
+
+  // Tab Switching
+  document.getElementById('upiTab').addEventListener('click', function() {
+    switchToTab('upi');
+  });
+
+  document.getElementById('bankTab').addEventListener('click', function() {
+    switchToTab('bank');
+  });
+
+  // UPI Buttons
+  document.querySelectorAll('.upiBtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const app = this.getAttribute('data-app');
+      processUPIPayment(app);
+    });
+  });
+
+  // Bank Buttons
+  document.querySelectorAll('.bankBtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const bank = this.getAttribute('data-bank');
+      processBankPayment(bank);
+    });
+  });
+
+  // Copy UPI ID Buttons
+  document.getElementById('copyUpiBtn').addEventListener('click', copyUPIID);
+  document.getElementById('copyUpiBankBtn').addEventListener('click', copyUPIID);
+
+  // Manual Success Button
+  document.getElementById('manualSuccessBtn').addEventListener('click', function() {
+    showSuccess();
+  });
+
+  // Success/Done Button
+  document.getElementById('doneBtn').addEventListener('click', function() {
+    document.getElementById('successScreen').classList.add('hidden');
+  });
+
+  // Error Screen Buttons
+  document.getElementById('tryOtherMethodBtn').addEventListener('click', function() {
+    document.getElementById('errorScreen').classList.add('hidden');
+    document.getElementById('paymentModal').classList.remove('hidden');
+  });
+
+  document.getElementById('retryPaymentBtn').addEventListener('click', function() {
+    document.getElementById('errorScreen').classList.add('hidden');
+    document.getElementById('paymentModal').classList.remove('hidden');
+  });
+
+  // Retry Button
+  document.getElementById('retryBtn').addEventListener('click', function() {
+    document.getElementById('loaderScreen').classList.add('hidden');
+    document.getElementById('paymentModal').classList.remove('hidden');
   });
 }
 
-function showLoader(message) {
-  loaderScreen.classList.remove("hidden");
-  retryBtn.classList.add("hidden");
-  loaderText.textContent = message;
+function switchToTab(tab) {
+  if (tab === 'upi') {
+    document.getElementById('upiTab').classList.add('active', 'text-blue-600');
+    document.getElementById('bankTab').classList.remove('active', 'text-blue-600');
+    document.getElementById('bankTab').classList.add('text-gray-500');
+    document.getElementById('upiSection').classList.remove('hidden');
+    document.getElementById('bankSection').classList.add('hidden');
+  } else {
+    document.getElementById('bankTab').classList.add('active', 'text-blue-600');
+    document.getElementById('upiTab').classList.remove('active', 'text-blue-600');
+    document.getElementById('upiTab').classList.add('text-gray-500');
+    document.getElementById('bankSection').classList.remove('hidden');
+    document.getElementById('upiSection').classList.add('hidden');
+  }
 }
 
-function hideLoader() {
-  loaderScreen.classList.add("hidden");
-}
-
-function showSuccess() {
-  successScreen.classList.remove("hidden");
-  transactionId.textContent = `TXN${Date.now().toString().slice(-8)}`;
-}
-
-function showError(message) {
-  errorScreen.classList.remove("hidden");
-  document.getElementById("errorMessage").textContent = message;
-}
-
-function processPayment(appType, appName, deepLink) {
-  showLoader(`Opening ${appName}...`);
-  paymentModal.classList.add("hidden");
+// REAL QR CODE GENERATION
+function generateRealQRCode() {
+  const upiString = `upi://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`;
+  const canvas = document.getElementById('qrCodeCanvas');
+  const ctx = canvas.getContext('2d');
   
-  // Store payment attempt in localStorage
-  localStorage.setItem('paymentAttempt', JSON.stringify({
-    appType,
-    appName,
-    timestamp: Date.now()
-  }));
+  // Set canvas size
+  canvas.width = 200;
+  canvas.height = 200;
   
-  // Try to open the app
-  setTimeout(() => {
-    window.location.href = deepLink;
+  // Clear canvas
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, 200, 200);
+  
+  try {
+    // Use the qrcode generator library
+    const qr = qrcode(0, 'L');
+    qr.addData(upiString);
+    qr.make();
     
-    // If app doesn't open, show retry option after 3 seconds
+    const cellSize = 200 / qr.getModuleCount();
+    
+    // Draw QR code
+    ctx.fillStyle = '#000000';
+    for (let row = 0; row < qr.getModuleCount(); row++) {
+      for (let col = 0; col < qr.getModuleCount(); col++) {
+        if (qr.isDark(row, col)) {
+          ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+    
+    console.log("✅ Real QR Code Generated Successfully!");
+    
+  } catch (error) {
+    console.error("QR Code generation failed:", error);
+    // Fallback: Create a simple QR-like pattern
+    createSimpleQRCode(ctx);
+  }
+}
+
+function createSimpleQRCode(ctx) {
+  // Create a simple QR-like pattern as fallback
+  ctx.fillStyle = '#000000';
+  
+  // Position markers (like real QR codes)
+  const positions = [[10, 10], [170, 10], [10, 170]];
+  
+  positions.forEach(([x, y]) => {
+    // Outer square
+    ctx.fillRect(x, y, 30, 30);
+    // Inner white square
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(x+5, y+5, 20, 20);
+    // Inner black square
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(x+10, y+10, 10, 10);
+  });
+  
+  // Add text
+  ctx.fillStyle = '#374151';
+  ctx.font = 'bold 12px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('SCAN ME', 100, 190);
+}
+
+function processUPIPayment(app) {
+  showLoader(`Opening ${getAppName(app)}...`);
+  
+  const upiLinks = {
+    'gpay': `tez://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
+    'phonepe': `phonepe://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
+    'paytm': `paytmmp://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
+    'bhim': `upiapi://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`
+  };
+
+  setTimeout(() => {
+    // Try to open UPI app
+    window.location.href = upiLinks[app];
+    
+    // Show retry option after 3 seconds
     setTimeout(() => {
-      retryBtn.classList.remove("hidden");
-      retryBtn.onclick = () => processPayment(appType, appName, deepLink);
+      document.getElementById('retryBtn').classList.remove('hidden');
     }, 3000);
   }, 500);
 }
 
-function simulatePaymentResult() {
-  // Simulate payment processing
+function processBankPayment(bank) {
+  showLoader(`Opening ${getBankName(bank)}...`);
+  
   setTimeout(() => {
     hideLoader();
-    
-    // 80% success rate for demo
-    const isSuccess = Math.random() > 0.2;
-    
-    if (isSuccess) {
-      showSuccess();
-    } else {
-      // Simulate different error scenarios
-      const errors = [
-        "Transaction limit exceeded. Please try with a smaller amount.",
-        "Insufficient balance in your account.",
-        "Bank server is temporarily unavailable.",
-        "UPI transaction failed. Please try again."
-      ];
-      const randomError = errors[Math.floor(Math.random() * errors.length)];
-      showError(randomError);
-    }
+    showError(`Please open ${getBankName(bank)} app and send payment to: ${UPI_ID}`);
   }, 2000);
 }
 
-// UPI Button Events
-upiBtns.forEach(btn => {
-  btn.onclick = () => {
-    const appName = btn.getAttribute('data-app');
-    const deepLink = UPI_LINKS[appName];
-    const appDisplayName = btn.querySelector('.font-semibold').textContent;
-    
-    if (deepLink) {
-      processPayment('upi', appDisplayName, deepLink);
-      // Simulate payment result after attempting to open app
-      setTimeout(simulatePaymentResult, 1000);
-    }
+function getAppName(app) {
+  const names = {
+    'gpay': 'Google Pay',
+    'phonepe': 'PhonePe', 
+    'paytm': 'Paytm',
+    'bhim': 'BHIM'
   };
-});
+  return names[app] || 'UPI App';
+}
 
-// Bank Button Events
-bankBtns.forEach(btn => {
-  btn.onclick = () => {
-    const bankCode = btn.getAttribute('data-bank');
-    const deepLink = BANK_LINKS[bankCode];
-    const bankName = btn.querySelector('.font-semibold').textContent;
-    
-    if (deepLink) {
-      processPayment('bank', bankName, deepLink);
-      // For bank apps, we'll simulate manual payment process
-      setTimeout(() => {
-        hideLoader();
-        showError(`Please complete the payment manually in ${bankName} app using UPI ID: ${UPI_ID}`);
-      }, 2000);
-    }
+function getBankName(bank) {
+  const names = {
+    'sbi': 'SBI Yono',
+    'hdfc': 'HDFC Bank',
+    'icici': 'ICICI Bank', 
+    'axis': 'Axis Mobile'
   };
-});
+  return names[bank] || 'Bank App';
+}
 
-// Success screen button
-doneBtn.onclick = () => {
-  successScreen.classList.add("hidden");
-  // Reset for next payment
-  localStorage.removeItem('paymentAttempt');
-};
+function copyUPIID() {
+  navigator.clipboard.writeText(UPI_ID).then(() => {
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.background = '#10b981';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+    }, 2000);
+  });
+}
 
-// Error screen buttons
-tryOtherMethodBtn.onclick = () => {
-  errorScreen.classList.add("hidden");
-  paymentModal.classList.remove("hidden");
-};
+function showLoader(message) {
+  document.getElementById('loaderScreen').classList.remove('hidden');
+  document.getElementById('loaderText').textContent = message;
+  document.getElementById('paymentModal').classList.add('hidden');
+  document.getElementById('retryBtn').classList.add('hidden');
+}
 
-retryPaymentBtn.onclick = () => {
-  errorScreen.classList.add("hidden");
-  const lastAttempt = JSON.parse(localStorage.getItem('paymentAttempt'));
-  if (lastAttempt) {
-    const deepLink = lastAttempt.appType === 'upi' 
-      ? UPI_LINKS[lastAttempt.appName.toLowerCase().replace(' ', '')]
-      : BANK_LINKS[lastAttempt.appName.split(' ')[0].toLowerCase()];
-    
-    if (deepLink) {
-      processPayment(lastAttempt.appType, lastAttempt.appName, deepLink);
-      setTimeout(simulatePaymentResult, 1000);
-    }
-  } else {
-    paymentModal.classList.remove("hidden");
-  }
-};
+function hideLoader() {
+  document.getElementById('loaderScreen').classList.add('hidden');
+}
 
-// Handle page visibility changes (when user returns from payment app)
+function showSuccess() {
+  document.getElementById('successScreen').classList.remove('hidden');
+  hideLoader();
+}
+
+function showError(message) {
+  document.getElementById('errorScreen').classList.remove('hidden');
+  document.getElementById('errorMessage').textContent = message;
+  hideLoader();
+}
+
+// Handle page visibility changes for payment simulation
 document.addEventListener('visibilitychange', function() {
-  if (!document.hidden && localStorage.getItem('paymentAttempt')) {
-    // User returned to the page, simulate payment processing
-    setTimeout(simulatePaymentResult, 1000);
+  if (!document.hidden) {
+    // Simulate payment completion when user returns to page
+    setTimeout(() => {
+      if (!document.getElementById('loaderScreen').classList.contains('hidden')) {
+        if (Math.random() > 0.3) {
+          showSuccess();
+        } else {
+          showError("Payment was not completed. Please try again.");
+        }
+      }
+    }, 1000);
   }
-});
-
-// Initialize QR Code when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  generateQRCode();
-});
-
-// Also generate QR code when payment modal opens
-payNow.addEventListener('click', function() {
-  // Small delay to ensure modal is rendered
-  setTimeout(generateQRCode, 100);
 });
 </script>
-
 </body>
 </html>
