@@ -35,6 +35,9 @@
   animation:spin 1s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* small helpers */
+.hidden{display:none;}
 </style>
 </head>
 
@@ -46,7 +49,7 @@
   <!-- HEADER -->
   <header class="bg-white shadow-md rounded-b-2xl">
     <div class="max-w-3xl mx-auto px-6 py-6 flex items-center gap-4">
-      <img src="Screenshot 2025-09-07 173907.png" class="w-20 h-20 rounded-lg object-contain"/>
+      <img src="Screenshot 2025-09-07 173907.png" class="w-20 h-20 rounded-lg object-contain" alt="logo"/>
       <div>
         <h1 class="text-2xl font-semibold text-gray-800">OM HEALTH CARE</h1>
         <p class="text-sm text-gray-500">Medicine & General Store</p>
@@ -77,21 +80,21 @@
       <!-- UPI Logos -->
       <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-white p-4 rounded-2xl shadow flex items-center gap-3">
-          <img src="Screenshot 2025-11-15 224710.png" class="w-12 h-12 rounded"/>
+          <img src="Screenshot 2025-11-15 224710.png" class="w-12 h-12 rounded" alt="gpay"/>
           <div>
             <div class="font-semibold text-gray-700">Google Pay</div>
           </div>
         </div>
 
         <div class="bg-white p-4 rounded-2xl shadow flex items-center gap-3">
-          <img src="Screenshot 2025-11-15 224740.png" class="w-12 h-12 rounded"/>
+          <img src="Screenshot 2025-11-15 224740.png" class="w-12 h-12 rounded" alt="phonepe"/>
           <div>
             <div class="font-semibold text-gray-700">PhonePe</div>
           </div>
         </div>
 
         <div class="bg-white p-4 rounded-2xl shadow flex items-center gap-3">
-          <img src="Screenshot 2025-11-15 224857.png" class="w-12 h-12 rounded"/>
+          <img src="Screenshot 2025-11-15 224857.png" class="w-12 h-12 rounded" alt="paytm"/>
           <div>
             <div class="font-semibold text-gray-700">Paytm UPI</div>
           </div>
@@ -99,7 +102,7 @@
       </div>
 
       <p class="text-center text-xs text-gray-500 mt-4">
-        UPI ID: <b>7715915731@fam</b>
+        UPI ID: <b id="upiShown">roshandevilal55@icici</b>
       </p>
 
     </div>
@@ -128,28 +131,28 @@
     <div class="grid grid-cols-2 gap-3 mt-5">
 
       <button class="upiBtn ripple bg-gray-100 p-4 rounded-xl flex items-center gap-3 active:scale-[0.97] transition">
-        <img src="Screenshot 2025-11-15 224710.png" class="w-12 h-12">
+        <img src="Screenshot 2025-11-15 224710.png" class="w-12 h-12" alt="GPay">
         <div>
           <div class="font-semibold">GPay</div>
         </div>
       </button>
 
       <button class="upiBtn ripple bg-gray-100 p-4 rounded-xl flex items-center gap-3 active:scale-[0.97] transition">
-        <img src="Screenshot 2025-11-15 224740.png" class="w-12 h-12">
+        <img src="Screenshot 2025-11-15 224740.png" class="w-12 h-12" alt="PhonePe">
         <div>
           <div class="font-semibold">PhonePe</div>
         </div>
       </button>
 
       <button class="upiBtn ripple bg-gray-100 p-4 rounded-xl flex items-center gap-3 active:scale-[0.97] transition">
-        <img src="Screenshot 2025-11-15 224857.png" class="w-12 h-12">
+        <img src="Screenshot 2025-11-15 224857.png" class="w-12 h-12" alt="Paytm">
         <div>
           <div class="font-semibold">Paytm</div>
         </div>
       </button>
 
       <button class="upiBtn ripple bg-gray-100 p-4 rounded-xl flex items-center gap-3 active:scale-[0.97] transition">
-        <img src="Screenshot 2025-11-15 224809.png" class="w-12 h-12">
+        <img src="Screenshot 2025-11-15 224809.png" class="w-12 h-12" alt="BHIM">
         <div>
           <div class="font-semibold">BHIM</div>
         </div>
@@ -157,7 +160,7 @@
 
     </div>
 
-    <p class="text-xs text-gray-500 text-center mt-3">UPI ID: <b>7715915731@fam</b></p>
+    <p class="text-xs text-gray-500 text-center mt-3">UPI ID: <b>roshandevilal55@icici</b></p>
 
   </div>
 </div>
@@ -166,7 +169,7 @@
 <div id="loaderScreen"
   class="fixed inset-0 hidden z-50 bg-white flex flex-col items-center justify-center">
 
-  <div class="loader"></div>
+  <div class="loader" aria-hidden="true"></div>
 
   <p class="mt-6 text-gray-700 font-medium text-lg">Opening your UPI app…</p>
   <p class="text-sm text-gray-500 mt-1">Do not close this screen</p>
@@ -205,8 +208,11 @@
 </audio>
 
 <script>
-const UPI_ID = "7715915731@fam";
+/* ------------- CONFIG ------------- */
+const UPI_ID = "roshandevilal55@icici";
 const AMOUNT = 1.00;
+
+/* DOM */
 const payNow = document.getElementById("payNow");
 const paymentModal = document.getElementById("paymentModal");
 const closeModal = document.getElementById("closeModal");
@@ -216,6 +222,10 @@ const retryBtn = document.getElementById("retryBtn");
 const successScreen = document.getElementById("successScreen");
 const successSound = document.getElementById("successSound");
 const doneBtn = document.getElementById("doneBtn");
+
+/* set UPI text display */
+document.getElementById('upiShown').textContent = UPI_ID;
+document.getElementById('amountDisplay').textContent = AMOUNT.toFixed(2);
 
 /* Open payment modal */
 payNow.onclick = () => {
@@ -259,6 +269,7 @@ function tryOpenUPI() {
   showLoader();
 
   setTimeout(() => {
+    // open the UPI URI
     window.location.href = link;
   }, 500);
 
@@ -279,23 +290,25 @@ upiBtns.forEach(btn => {
     paymentModal.classList.add("hidden");
     tryOpenUPI();
 
-    localStorage.setItem("paymentStarted", "1");
+    try { localStorage.setItem("paymentStarted", "1"); } catch(e){}
   };
 });
 
 /* Detect return to page */
 window.addEventListener("focus", () => {
-  if (localStorage.getItem("paymentStarted") === "1") {
-    localStorage.removeItem("paymentStarted");
-    hideLoader();
-    showSuccess();
-  }
+  try {
+    if (localStorage.getItem("paymentStarted") === "1") {
+      localStorage.removeItem("paymentStarted");
+      hideLoader();
+      showSuccess();
+    }
+  } catch(e){}
 });
 
 /* Show success */
 function showSuccess() {
   successScreen.classList.remove("hidden");
-  successSound.play().catch(()=>{});
+  try { successSound.currentTime = 0; successSound.play().catch(()=>{}); } catch(e){}
   if (navigator.vibrate) navigator.vibrate([30,20,30]);
 }
 
@@ -303,6 +316,27 @@ function showSuccess() {
 doneBtn.onclick = () => {
   successScreen.classList.add("hidden");
 };
+
+/* Desktop note */
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+if(!isMobile()){
+  payNow.addEventListener('click', ()=>{
+    setTimeout(()=>{
+      const popupCard = document.querySelector('#paymentModal .slideUp');
+      if(popupCard && !popupCard.querySelector('.desktop-note')){
+        const note = document.createElement('div');
+        note.className = 'desktop-note mt-3 px-3 py-2 text-sm text-red-600';
+        note.textContent = 'UPI deep links work only on mobile devices. Open this page on your phone to pay.';
+        popupCard.appendChild(note);
+      }
+    },140);
+  });
+}
+
+/* debug */
+console.log('UPI link example:', buildUPILink());
 </script>
 
 </body>
