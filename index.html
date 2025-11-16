@@ -139,6 +139,14 @@ body {
   border: 2px solid #e5e7eb;
   border-radius: 12px;
 }
+
+.instruction-box {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
 </style>
 </head>
 
@@ -273,7 +281,20 @@ body {
 
     <!-- UPI Apps Section -->
     <div id="upiSection" class="mt-4">
-      <div class="grid grid-cols-2 gap-3">
+      <!-- Instruction Box -->
+      <div class="instruction-box">
+        <div class="flex items-start">
+          <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            <p class="font-semibold text-blue-800">Click any UPI app below</p>
+            <p class="text-blue-700 text-sm mt-1">If app doesn't open automatically, use the QR code or manual payment</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mt-4">
         <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="gpay">
           <div class="app-logo gpay-logo">G Pay</div>
           <div><div class="font-semibold text-gray-800">GPay</div></div>
@@ -311,7 +332,7 @@ body {
 
     <!-- Net Banking Section -->
     <div id="bankSection" class="mt-4 hidden">
-      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+      <div class="instruction-box">
         <div class="flex items-start">
           <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
@@ -374,11 +395,20 @@ body {
 <!-- LOADER SCREEN -->
 <div id="loaderScreen" class="fixed inset-0 hidden z-50 bg-white flex flex-col items-center justify-center p-4">
   <div class="loader"></div>
-  <p class="mt-6 text-gray-800 font-semibold text-lg text-center" id="loaderText">Processing Payment...</p>
-  <p class="text-sm text-gray-600 mt-1 text-center">Please wait while we process your payment</p>
-  <button id="retryBtn" class="hidden mt-6 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm shadow-md ripple transition-all duration-200">
-    Retry Payment
-  </button>
+  <p class="mt-6 text-gray-800 font-semibold text-lg text-center" id="loaderText">Opening Payment App...</p>
+  <p class="text-sm text-gray-600 mt-1 text-center" id="loaderSubtext">Please wait while we redirect you</p>
+  
+  <div class="mt-6 space-y-3 w-full max-w-xs">
+    <button id="retryBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
+      Retry Opening App
+    </button>
+    <button id="useQRBtn" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
+      Use QR Code Instead
+    </button>
+    <button id="manualPayBtn" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
+      Pay Manually
+    </button>
+  </div>
 </div>
 
 <!-- SUCCESS SCREEN -->
@@ -406,15 +436,15 @@ body {
     <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
       <span class="text-2xl text-red-600">⚠️</span>
     </div>
-    <h2 class="mt-2 text-2xl font-bold text-gray-800">Payment Failed</h2>
-    <p class="mt-2 text-gray-600 text-center" id="errorMessage">The payment could not be processed.</p>
-    <div class="mt-4 p-4 bg-red-50 rounded-xl border border-red-200 text-left">
-      <p class="text-sm font-semibold text-red-800">Possible solutions:</p>
-      <ul class="text-xs text-red-700 mt-1 list-disc list-inside space-y-1">
-        <li>Check your bank account balance</li>
-        <li>Verify transaction limits with your bank</li>
+    <h2 class="mt-2 text-2xl font-bold text-gray-800">App Not Opened</h2>
+    <p class="mt-2 text-gray-600 text-center" id="errorMessage">The payment app couldn't be opened automatically.</p>
+    <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200 text-left">
+      <p class="text-sm font-semibold text-blue-800">Try these options:</p>
+      <ul class="text-xs text-blue-700 mt-1 list-disc list-inside space-y-1">
+        <li>Open your UPI app manually</li>
+        <li>Use the QR code to scan and pay</li>
+        <li>Copy UPI ID and pay manually</li>
         <li>Try a different payment method</li>
-        <li>Contact your bank for assistance</li>
       </ul>
     </div>
     <div class="mt-6 flex gap-3">
@@ -432,6 +462,9 @@ body {
 // Constants
 const UPI_ID = "bhaveshsutharb830@okhdfcbank";
 const AMOUNT = 1.00;
+
+// Global variables to track current payment attempt
+let currentPaymentAttempt = null;
 
 // Initialize DOM elements after page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -467,6 +500,7 @@ function initializeApp() {
   document.querySelectorAll('.upiBtn').forEach(btn => {
     btn.addEventListener('click', function() {
       const app = this.getAttribute('data-app');
+      currentPaymentAttempt = { type: 'upi', app: app };
       processUPIPayment(app);
     });
   });
@@ -475,6 +509,7 @@ function initializeApp() {
   document.querySelectorAll('.bankBtn').forEach(btn => {
     btn.addEventListener('click', function() {
       const bank = this.getAttribute('data-bank');
+      currentPaymentAttempt = { type: 'bank', bank: bank };
       processBankPayment(bank);
     });
   });
@@ -501,13 +536,37 @@ function initializeApp() {
 
   document.getElementById('retryPaymentBtn').addEventListener('click', function() {
     document.getElementById('errorScreen').classList.add('hidden');
-    document.getElementById('paymentModal').classList.remove('hidden');
+    if (currentPaymentAttempt) {
+      if (currentPaymentAttempt.type === 'upi') {
+        processUPIPayment(currentPaymentAttempt.app);
+      } else {
+        processBankPayment(currentPaymentAttempt.bank);
+      }
+    } else {
+      document.getElementById('paymentModal').classList.remove('hidden');
+    }
   });
 
-  // Retry Button
+  // Loader Screen Buttons
   document.getElementById('retryBtn').addEventListener('click', function() {
+    if (currentPaymentAttempt) {
+      if (currentPaymentAttempt.type === 'upi') {
+        processUPIPayment(currentPaymentAttempt.app);
+      } else {
+        processBankPayment(currentPaymentAttempt.bank);
+      }
+    }
+  });
+
+  document.getElementById('useQRBtn').addEventListener('click', function() {
     document.getElementById('loaderScreen').classList.add('hidden');
     document.getElementById('paymentModal').classList.remove('hidden');
+    switchToTab('upi');
+  });
+
+  document.getElementById('manualPayBtn').addEventListener('click', function() {
+    document.getElementById('loaderScreen').classList.add('hidden');
+    showError("Please open your UPI app manually and send payment to: " + UPI_ID);
   });
 }
 
@@ -594,7 +653,8 @@ function createSimpleQRCode(ctx) {
 }
 
 function processUPIPayment(app) {
-  showLoader(`Opening ${getAppName(app)}...`);
+  const appName = getAppName(app);
+  showLoader(`Opening ${appName}...`, 'If app doesn\'t open, use the options below');
   
   const upiLinks = {
     'gpay': `tez://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
@@ -603,23 +663,44 @@ function processUPIPayment(app) {
     'bhim': `upiapi://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`
   };
 
+  // Try multiple methods to open the app
   setTimeout(() => {
-    // Try to open UPI app
-    window.location.href = upiLinks[app];
+    const link = document.createElement('a');
+    link.href = upiLinks[app];
+    link.style.display = 'none';
+    document.body.appendChild(link);
     
-    // Show retry option after 3 seconds
+    // Method 1: Direct click
+    link.click();
+    
+    // Method 2: Window location (fallback)
+    setTimeout(() => {
+      window.location.href = upiLinks[app];
+    }, 100);
+    
+    // Method 3: Open in new tab (final fallback)
+    setTimeout(() => {
+      window.open(upiLinks[app], '_blank');
+    }, 200);
+    
+    document.body.removeChild(link);
+    
+    // Show retry options after 2 seconds
     setTimeout(() => {
       document.getElementById('retryBtn').classList.remove('hidden');
-    }, 3000);
+      document.getElementById('useQRBtn').classList.remove('hidden');
+      document.getElementById('manualPayBtn').classList.remove('hidden');
+    }, 2000);
   }, 500);
 }
 
 function processBankPayment(bank) {
-  showLoader(`Opening ${getBankName(bank)}...`);
+  const bankName = getBankName(bank);
+  showLoader(`Opening ${bankName}...`, 'You may need to open the app manually');
   
   setTimeout(() => {
     hideLoader();
-    showError(`Please open ${getBankName(bank)} app and send payment to: ${UPI_ID}`);
+    showError(`Please open ${bankName} app manually and send payment to: ${UPI_ID}`);
   }, 2000);
 }
 
@@ -656,11 +737,16 @@ function copyUPIID() {
   });
 }
 
-function showLoader(message) {
+function showLoader(message, subtext = '') {
   document.getElementById('loaderScreen').classList.remove('hidden');
   document.getElementById('loaderText').textContent = message;
+  document.getElementById('loaderSubtext').textContent = subtext;
   document.getElementById('paymentModal').classList.add('hidden');
+  
+  // Hide retry options initially
   document.getElementById('retryBtn').classList.add('hidden');
+  document.getElementById('useQRBtn').classList.add('hidden');
+  document.getElementById('manualPayBtn').classList.add('hidden');
 }
 
 function hideLoader() {
@@ -686,8 +772,6 @@ document.addEventListener('visibilitychange', function() {
       if (!document.getElementById('loaderScreen').classList.contains('hidden')) {
         if (Math.random() > 0.3) {
           showSuccess();
-        } else {
-          showError("Payment was not completed. Please try again.");
         }
       }
     }, 1000);
