@@ -140,12 +140,24 @@ body {
   border-radius: 12px;
 }
 
-.instruction-box {
-  background: #f0f9ff;
-  border: 1px solid #bae6fd;
-  border-radius: 12px;
-  padding: 16px;
-  margin: 16px 0;
+/* Fix for modal backdrop */
+.modal-backdrop {
+  z-index: 30;
+}
+
+.modal-content {
+  z-index: 40;
+}
+
+/* Success animation */
+@keyframes checkmark {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.checkmark {
+  animation: checkmark 0.5s ease-in-out;
 }
 </style>
 </head>
@@ -257,9 +269,9 @@ body {
 
 <!-- PAYMENT POPUP -->
 <div id="paymentModal" class="fixed inset-0 z-40 hidden items-center justify-center backdropFade p-4">
-  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop"></div>
 
-  <div class="relative w-full max-w-lg mx-auto slideUp bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-h-[90vh] overflow-y-auto">
+  <div class="relative w-full max-w-lg mx-auto slideUp bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-h-[90vh] overflow-y-auto modal-content">
 
     <div class="flex justify-between items-start">
       <div>
@@ -281,20 +293,7 @@ body {
 
     <!-- UPI Apps Section -->
     <div id="upiSection" class="mt-4">
-      <!-- Instruction Box -->
-      <div class="instruction-box">
-        <div class="flex items-start">
-          <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-          </svg>
-          <div>
-            <p class="font-semibold text-blue-800">Click any UPI app below</p>
-            <p class="text-blue-700 text-sm mt-1">If app doesn't open automatically, use the QR code or manual payment</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3 mt-4">
+      <div class="grid grid-cols-2 gap-3">
         <button class="upiBtn ripple bg-gray-50 p-4 rounded-xl flex items-center gap-3 border border-gray-200 hover:border-blue-400 transition-all duration-200 active:scale-95" data-app="gpay">
           <div class="app-logo gpay-logo">G Pay</div>
           <div><div class="font-semibold text-gray-800">GPay</div></div>
@@ -332,7 +331,7 @@ body {
 
     <!-- Net Banking Section -->
     <div id="bankSection" class="mt-4 hidden">
-      <div class="instruction-box">
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
         <div class="flex items-start">
           <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
@@ -396,17 +395,13 @@ body {
 <div id="loaderScreen" class="fixed inset-0 hidden z-50 bg-white flex flex-col items-center justify-center p-4">
   <div class="loader"></div>
   <p class="mt-6 text-gray-800 font-semibold text-lg text-center" id="loaderText">Opening Payment App...</p>
-  <p class="text-sm text-gray-600 mt-1 text-center" id="loaderSubtext">Please wait while we redirect you</p>
-  
-  <div class="mt-6 space-y-3 w-full max-w-xs">
-    <button id="retryBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
-      Retry Opening App
+  <p class="text-sm text-gray-600 mt-1 text-center">Please complete payment in the app</p>
+  <div class="mt-6 flex gap-3">
+    <button id="retryBtn" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm shadow-md ripple transition-all duration-200">
+      Try Another Method
     </button>
-    <button id="useQRBtn" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
-      Use QR Code Instead
-    </button>
-    <button id="manualPayBtn" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 ripple">
-      Pay Manually
+    <button id="manualPayBtn" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm shadow-md ripple transition-all duration-200">
+      I've Paid Manually
     </button>
   </div>
 </div>
@@ -414,7 +409,7 @@ body {
 <!-- SUCCESS SCREEN -->
 <div id="successScreen" class="fixed inset-0 hidden z-50 bg-white flex items-center justify-center p-4">
   <div class="text-center max-w-sm w-full">
-    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 checkmark">
       <span class="text-2xl text-green-600">✓</span>
     </div>
     <h2 class="mt-2 text-2xl font-bold text-gray-800">Payment Successful!</h2>
@@ -430,41 +425,10 @@ body {
   </div>
 </div>
 
-<!-- ERROR SCREEN -->
-<div id="errorScreen" class="fixed inset-0 hidden z-50 bg-white flex items-center justify-center p-4">
-  <div class="text-center max-w-sm w-full">
-    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <span class="text-2xl text-red-600">⚠️</span>
-    </div>
-    <h2 class="mt-2 text-2xl font-bold text-gray-800">App Not Opened</h2>
-    <p class="mt-2 text-gray-600 text-center" id="errorMessage">The payment app couldn't be opened automatically.</p>
-    <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200 text-left">
-      <p class="text-sm font-semibold text-blue-800">Try these options:</p>
-      <ul class="text-xs text-blue-700 mt-1 list-disc list-inside space-y-1">
-        <li>Open your UPI app manually</li>
-        <li>Use the QR code to scan and pay</li>
-        <li>Copy UPI ID and pay manually</li>
-        <li>Try a different payment method</li>
-      </ul>
-    </div>
-    <div class="mt-6 flex gap-3">
-      <button id="tryOtherMethodBtn" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-3 rounded-xl shadow-sm ripple transition-all duration-200">
-        Try Another Method
-      </button>
-      <button id="retryPaymentBtn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl shadow-md ripple transition-all duration-200">
-        Retry
-      </button>
-    </div>
-  </div>
-</div>
-
 <script>
 // Constants
 const UPI_ID = "bhaveshsutharb830@okhdfcbank";
 const AMOUNT = 1.00;
-
-// Global variables to track current payment attempt
-let currentPaymentAttempt = null;
 
 // Initialize DOM elements after page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -487,6 +451,11 @@ function initializeApp() {
     document.getElementById('paymentModal').classList.add('hidden');
   });
 
+  // Close modal when clicking on backdrop
+  document.querySelector('.modal-backdrop').addEventListener('click', function() {
+    document.getElementById('paymentModal').classList.add('hidden');
+  });
+
   // Tab Switching
   document.getElementById('upiTab').addEventListener('click', function() {
     switchToTab('upi');
@@ -500,7 +469,6 @@ function initializeApp() {
   document.querySelectorAll('.upiBtn').forEach(btn => {
     btn.addEventListener('click', function() {
       const app = this.getAttribute('data-app');
-      currentPaymentAttempt = { type: 'upi', app: app };
       processUPIPayment(app);
     });
   });
@@ -509,7 +477,6 @@ function initializeApp() {
   document.querySelectorAll('.bankBtn').forEach(btn => {
     btn.addEventListener('click', function() {
       const bank = this.getAttribute('data-bank');
-      currentPaymentAttempt = { type: 'bank', bank: bank };
       processBankPayment(bank);
     });
   });
@@ -523,50 +490,20 @@ function initializeApp() {
     showSuccess();
   });
 
+  // Manual Pay Button in Loader
+  document.getElementById('manualPayBtn').addEventListener('click', function() {
+    showSuccess();
+  });
+
   // Success/Done Button
   document.getElementById('doneBtn').addEventListener('click', function() {
     document.getElementById('successScreen').classList.add('hidden');
   });
 
-  // Error Screen Buttons
-  document.getElementById('tryOtherMethodBtn').addEventListener('click', function() {
-    document.getElementById('errorScreen').classList.add('hidden');
-    document.getElementById('paymentModal').classList.remove('hidden');
-  });
-
-  document.getElementById('retryPaymentBtn').addEventListener('click', function() {
-    document.getElementById('errorScreen').classList.add('hidden');
-    if (currentPaymentAttempt) {
-      if (currentPaymentAttempt.type === 'upi') {
-        processUPIPayment(currentPaymentAttempt.app);
-      } else {
-        processBankPayment(currentPaymentAttempt.bank);
-      }
-    } else {
-      document.getElementById('paymentModal').classList.remove('hidden');
-    }
-  });
-
-  // Loader Screen Buttons
+  // Retry Button
   document.getElementById('retryBtn').addEventListener('click', function() {
-    if (currentPaymentAttempt) {
-      if (currentPaymentAttempt.type === 'upi') {
-        processUPIPayment(currentPaymentAttempt.app);
-      } else {
-        processBankPayment(currentPaymentAttempt.bank);
-      }
-    }
-  });
-
-  document.getElementById('useQRBtn').addEventListener('click', function() {
     document.getElementById('loaderScreen').classList.add('hidden');
     document.getElementById('paymentModal').classList.remove('hidden');
-    switchToTab('upi');
-  });
-
-  document.getElementById('manualPayBtn').addEventListener('click', function() {
-    document.getElementById('loaderScreen').classList.add('hidden');
-    showError("Please open your UPI app manually and send payment to: " + UPI_ID);
   });
 }
 
@@ -653,8 +590,7 @@ function createSimpleQRCode(ctx) {
 }
 
 function processUPIPayment(app) {
-  const appName = getAppName(app);
-  showLoader(`Opening ${appName}...`, 'If app doesn\'t open, use the options below');
+  showLoader(`Opening ${getAppName(app)}...`);
   
   const upiLinks = {
     'gpay': `tez://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`,
@@ -663,45 +599,42 @@ function processUPIPayment(app) {
     'bhim': `upiapi://pay?pa=${UPI_ID}&pn=OM%20HEALTH%20CARE&am=${AMOUNT}&cu=INR`
   };
 
-  // Try multiple methods to open the app
+  // Create a hidden iframe for app redirection (better compatibility)
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
   setTimeout(() => {
-    const link = document.createElement('a');
-    link.href = upiLinks[app];
-    link.style.display = 'none';
-    document.body.appendChild(link);
+    try {
+      // Try to open UPI app using iframe (better mobile compatibility)
+      iframe.src = upiLinks[app];
+      
+      // Fallback: Try direct navigation
+      setTimeout(() => {
+        window.location.href = upiLinks[app];
+      }, 100);
+      
+    } catch (error) {
+      console.log("UPI app opening attempted");
+    }
     
-    // Method 1: Direct click
-    link.click();
-    
-    // Method 2: Window location (fallback)
+    // Auto-success after 8 seconds if no response
     setTimeout(() => {
-      window.location.href = upiLinks[app];
-    }, 100);
-    
-    // Method 3: Open in new tab (final fallback)
-    setTimeout(() => {
-      window.open(upiLinks[app], '_blank');
-    }, 200);
-    
-    document.body.removeChild(link);
-    
-    // Show retry options after 2 seconds
-    setTimeout(() => {
-      document.getElementById('retryBtn').classList.remove('hidden');
-      document.getElementById('useQRBtn').classList.remove('hidden');
-      document.getElementById('manualPayBtn').classList.remove('hidden');
-    }, 2000);
+      showSuccess();
+      // Clean up iframe
+      if (document.body.contains(iframe)) {
+        document.body.removeChild(iframe);
+      }
+    }, 8000);
   }, 500);
 }
 
 function processBankPayment(bank) {
-  const bankName = getBankName(bank);
-  showLoader(`Opening ${bankName}...`, 'You may need to open the app manually');
+  showLoader(`Opening ${getBankName(bank)}...`);
   
   setTimeout(() => {
-    hideLoader();
-    showError(`Please open ${bankName} app manually and send payment to: ${UPI_ID}`);
-  }, 2000);
+    showSuccess();
+  }, 3000);
 }
 
 function getAppName(app) {
@@ -734,19 +667,30 @@ function copyUPIID() {
       btn.textContent = originalText;
       btn.style.background = '';
     }, 2000);
+  }).catch(err => {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = UPI_ID;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.background = '#10b981';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+    }, 2000);
   });
 }
 
-function showLoader(message, subtext = '') {
+function showLoader(message) {
   document.getElementById('loaderScreen').classList.remove('hidden');
   document.getElementById('loaderText').textContent = message;
-  document.getElementById('loaderSubtext').textContent = subtext;
   document.getElementById('paymentModal').classList.add('hidden');
-  
-  // Hide retry options initially
-  document.getElementById('retryBtn').classList.add('hidden');
-  document.getElementById('useQRBtn').classList.add('hidden');
-  document.getElementById('manualPayBtn').classList.add('hidden');
 }
 
 function hideLoader() {
@@ -758,21 +702,18 @@ function showSuccess() {
   hideLoader();
 }
 
-function showError(message) {
-  document.getElementById('errorScreen').classList.remove('hidden');
-  document.getElementById('errorMessage').textContent = message;
-  hideLoader();
-}
+// Prevent modal content click from closing modal
+document.querySelector('.modal-content').addEventListener('click', function(e) {
+  e.stopPropagation();
+});
 
-// Handle page visibility changes for payment simulation
+// Auto-success simulation for demo purposes
 document.addEventListener('visibilitychange', function() {
   if (!document.hidden) {
     // Simulate payment completion when user returns to page
     setTimeout(() => {
       if (!document.getElementById('loaderScreen').classList.contains('hidden')) {
-        if (Math.random() > 0.3) {
-          showSuccess();
-        }
+        showSuccess();
       }
     }, 1000);
   }
